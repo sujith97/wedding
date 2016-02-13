@@ -11,6 +11,10 @@ body
 		justify-content center
 		img
 			position absolute
+			@media screen and (min-width: 300px)
+				width 86%
+				height 6%
+				left 6%
 			@media screen and (min-width: 400px)
 				width 86%
 				height 6%
@@ -23,6 +27,12 @@ body
 				width 50%
 				height 10%
 				left 25%
+		@media screen and (min-width: 300px)	
+			.title
+				text-align center
+				width 100%
+				padding-top 10%
+				font-size 1.6em
 		@media screen and (min-width: 400px)	
 			.title
 				text-align center
@@ -44,6 +54,11 @@ body
 	.flx
 		display flex
 		justify-content center
+		@media screen and (min-width: 300px)
+			.pointing.menu
+				padding-top 2%
+				width 85%
+				font-size 0.7em
 		@media screen and (min-width: 400px)
 			.pointing.menu
 				padding-top 2%
