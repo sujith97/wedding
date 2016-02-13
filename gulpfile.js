@@ -3,7 +3,8 @@ var gulp = require('gulp'),
   browserSync = require('browser-sync'),
   reload = browserSync.reload,
   del = require('del'),
-  path = require('path');
+  path = require('path'),
+  runSequence = require('run-sequence');
 
 var PATTERN = {
   HTML: '*.html',
@@ -23,11 +24,12 @@ FOLDER.CSS_PREPROS = path.join(FOLDER.STATIC_FILES_ROOT, 'stylesheets', 'prepros
 FOLDER.CSS_DESTINATION = path.join(FOLDER.STATIC_FILES_ROOT, 'stylesheets');
 FOLDER.VIEW_FILES = path.join(FOLDER.VIEW_FILES_ROOT, '**', PATTERN.EJS);
 FOLDER.HTML_TEMPLATES = path.join(FOLDER.STATIC_FILES_ROOT, 'templates', '*');
-FOLDER.HTML_TEMPLATES_RELEASE = path.join(FOLDER.VIEW_FILES_ROOT, 'templates');
+FOLDER.HTML_TEMPLATES_RELEASE = path.join(FOLDER.PRODUCTION_FOLDER, 'templates');
 
 
 var GULP_TASKS = {
   OPTIMIZE: 'optimize',
+  OPTIMIZE_STATICS: 'optimize_statics',
   CLEAN: 'clean',
   STYLES: 'styles',
   JSHINT: 'jshint',
@@ -36,22 +38,29 @@ var GULP_TASKS = {
   HTML_TEMPLATES: 'htmlTemplates'
 }
 
-gulp.task(GULP_TASKS.OPTIMIZE, [GULP_TASKS.CLEAN], function() {
-	var assets = $.useref.assets({searchPath: [FOLDER.STATIC_FILES]});
-	return gulp.src(FOLDER.VIEW_FILES)
-		// Place the HTML files which are served from NODE in /dist/views folder
-		.pipe($.if(PATTERN.HTML, $.rename(function (_path) { path.join(_path.dirname, FOLDER.VIEW_FILES_ROOT) })))
-		// Gather all the assets from HTML files
-		.pipe(assets)
-		// Concatinate and minify JS files
-		.pipe($.if(PATTERN.JAVASCRIPT, $.uglify()))
-		// Minify CSS
-		.pipe($.if(PATTERN.CSS, $.cssmin()))
-		.pipe(assets.restore())
-		.pipe($.useref())
-		// Store the production files in release folder
-		.pipe(gulp.dest(FOLDER.PRODUCTION_FOLDER));
+gulp.task(GULP_TASKS.OPTIMIZE, function() {
+  runSequence(GULP_TASKS.CLEAN,
+              [GULP_TASKS.OPTIMIZE_STATICS, GULP_TASKS.HTML_TEMPLATES]
+              );
 });
+
+gulp.task(GULP_TASKS.OPTIMIZE_STATICS, function() {
+  var assets = $.useref.assets({searchPath: [FOLDER.STATIC_FILES_ROOT]});
+  return gulp.src(FOLDER.VIEW_FILES)
+    // Place the HTML files which are served from NODE in /dist/views folder
+    .pipe($.if(PATTERN.HTML, $.rename(function (_path) { path.join(_path.dirname, FOLDER.VIEW_FILES_ROOT) })))
+    // Gather all the assets from HTML files
+    .pipe(assets)
+    // Concatinate and minify JS files
+    .pipe($.if(PATTERN.JAVASCRIPT, $.uglify()))
+    // Minify CSS
+    .pipe($.if(PATTERN.CSS, $.cssmin()))
+    .pipe(assets.restore())
+    .pipe($.useref())
+    // Store the production files in release folder
+    .pipe(gulp.dest(FOLDER.PRODUCTION_FOLDER));
+});
+
 
 // Clean Output Directory
 gulp.task(GULP_TASKS.CLEAN, del.bind(null, FOLDER.PRODUCTION_FOLDER));
@@ -93,7 +102,7 @@ gulp.task(GULP_TASKS.NODEMON, function (cb) {
   var called = false;
   return $.nodemon({
     script: FOLDER.MAIN_RUNNER,
-    env: { 'NODE_ENV': 'development', 'mongodb': false },
+    env: { 'NODE_ENV': 'production', 'mongodb': false },
     ignore: [ path.join(FOLDER.STATIC_FILES_ROOT, '**', '*.*'), path.join(FOLDER.PRODUCTION_FOLDER, '**', '*.*') ]
   }).on('start', function () {
     if (!called) { cb(); }

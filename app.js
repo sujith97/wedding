@@ -29,7 +29,7 @@ if (app.get('env') === 'development') {
   app.use(logger('dev'));
 } else {
   console.log('PRODUCTION');
-  app.set('views', path.join(__dirname, 'release/views'));
+  app.set('views', path.join(__dirname, 'release'));
   app.use(express.static(path.join(__dirname, 'release')));
 }
 
