@@ -19,7 +19,7 @@ FOLDER.STATIC_FILES_ROOT = 'public';
 FOLDER.VIEW_FILES_ROOT = 'views';
 FOLDER.PRODUCTION_FOLDER = 'release';
 FOLDER.MAIN_RUNNER = path.join('bin', 'www');
-FOLDER.JS_FOLDER = path.join(FOLDER.STATIC_FILES_ROOT, 'javascripts', '**', PATTERN.JAVASCRIPT);
+FOLDER.JS_FOLDER = path.join(FOLDER.STATIC_FILES_ROOT, 'components', '**', PATTERN.JAVASCRIPT);
 FOLDER.CSS_PREPROS = path.join(FOLDER.STATIC_FILES_ROOT, 'stylesheets', 'prepros', '**', PATTERN.STYLUS);
 FOLDER.CSS_DESTINATION = path.join(FOLDER.STATIC_FILES_ROOT, 'stylesheets');
 FOLDER.VIEW_FILES = path.join(FOLDER.VIEW_FILES_ROOT, '**', PATTERN.EJS);
@@ -102,7 +102,7 @@ gulp.task(GULP_TASKS.NODEMON, function (cb) {
   var called = false;
   return $.nodemon({
     script: FOLDER.MAIN_RUNNER,
-    env: { 'NODE_ENV': 'production', 'mongodb': false },
+    env: { 'NODE_ENV': 'development', 'mongodb': false },
     ignore: [ path.join(FOLDER.STATIC_FILES_ROOT, '**', '*.*'), path.join(FOLDER.PRODUCTION_FOLDER, '**', '*.*') ]
   }).on('start', function () {
     if (!called) { cb(); }

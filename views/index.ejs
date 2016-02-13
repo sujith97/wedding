@@ -3,10 +3,13 @@
  <head>
   <% include head.ejs %>
  </head>
- <body data-ng-app="<%= MODULE_NAME %>">
-    <div data-ui-view>
-      
-    </div>
-  <% include scripts.ejs %>
-  </body>
+ <body data-ng-app="<%= MODULE_NAME %>" data-ng-strict-di>
+	<nav> </nav>
+	<div class="ui content">
+		<div data-ui-view>
+	  		
+		</div>
+	</div>
+	<% include scripts.ejs %>
+	</body>
 </html>

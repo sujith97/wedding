@@ -1,6 +1,6 @@
 {
-  "name": "SeedProject",
-  "version": "0.0.0",
+  "name": "Wedding",
+  "version": "0.0.1",
   "authors": [
     "Sujith Bheemireddi"
   ],
@@ -14,10 +14,10 @@
     "tests"
   ],
   "dependencies": {
-    "a0-angular-storage": "~0.0.12",
-    "angular": "~1.4.4",
-    "angular-ui-router": "~0.2.15",
+    "a0-angular-storage": "^0.0.13",
+    "angular": "^1.5.0",
+    "angular-ui-router": "~0.2.18",
     "jquery": "~2.1.4",
-    "semantic-ui": "2.0.8"
+    "semantic": "semantic-ui#^2.1.8"
   }
 }
