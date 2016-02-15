@@ -6,19 +6,18 @@
 </div>
 <div class="flx">
 	<div class="ui secondary pointing menu">
-	  <a class="active item">
+	  <a class="item" data-ng-class="{ active: isActive('/home') }" ui-sref="home">
 	    Home
 	  </a>
-	  <a class="item">
+  	<a class="item" data-ng-class="{ active: isActive('/messages') }" ui-sref="messages" ng-show="!hasNotLoggedIn">
 	    Messages
 	  </a>
-	  <a class="item">
+<!-- 	  <a class="item" data-ng-class="{ active: isActive('/friends') }" ui-sref="friends" ng-show="!hasNotLoggedIn">
 	    Friends
-	  </a>
+	  </a> -->
+	  
 	  <div class="right menu">
-	    <a class="ui item">
-	      Logout
-	    </a>
+  		<social-nav></social-nav>
 	  </div>
 	</div>
 </div>

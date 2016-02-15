@@ -12,11 +12,11 @@
       return service;
 
       function handleRequest(config) {
-        var token = store.get('token');
-        if (token) {
-            config.headers['session-token'] = token;
+        var id = store.get('id');
+        if (id) {
+            config.headers['session-id'] = id;
         } else {
-          config.headers['session-token'] = 'NONE';
+          config.headers['session-id'] = 'NONE';
         }
         return config;
       }
@@ -31,10 +31,10 @@
     function ConfigureAuthentication($rootScope, store, $state) {
       $rootScope.$on('$stateChangeStart', handleRouteChange);
       function handleRouteChange(event, newState) {
-        var token = store.get('token');
-        if (newState.data && newState.data.requiresLogin && !token) {
-          console.log('Login');
-          $state.go('login');
+        var id = store.get('id');
+        if (newState.data && newState.data.requiresLogin && !id) {
+          console.log('Home');
+          $state.go('home');
           event.preventDefault();
         }
       }
