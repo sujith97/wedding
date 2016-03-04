@@ -18,7 +18,7 @@
 
 <div class="ui stackable grid">
   
-  <div class="five wide column">
+  <div class="five wide column" ng-show='homeCtrl.events.bridal.name'>
   	<div class="ui card">
 		<div class="content">
 			<div class="header">Bridal Shower</div>
@@ -29,7 +29,7 @@
 		</div>
 		<div class="extra content">
 			<span ng-show='!ID'>SignIn to find venue and more about this event.</span>
-			<span ng-show='homeCtrl.events.bridal.name'>
+			<span>
 				<p> <b> {{homeCtrl.events.bridal.name}} </b> <br/>
 				{{homeCtrl.events.bridal.street}}, {{homeCtrl.events.bridal.city}},{{homeCtrl.events.bridal.state}}, {{homeCtrl.events.bridal.country}}</p>
 			</span>
@@ -56,7 +56,7 @@
 	</div>
   </div>
 
-  <div class="five wide column">
+  <div class="five wide column" ng-show='homeCtrl.events.reception.name'>
   	<div class="ui card">
 		<div class="content">
 			<div class="header">Reception</div>
