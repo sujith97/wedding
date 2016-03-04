@@ -29,7 +29,7 @@
 		</div>
 		<div class="extra content">
 			<span ng-show='!ID'>SignIn to find venue and more about this event.</span>
-			<span ng-model="wedding_venue" ng-show='ID'>
+			<span ng-show='homeCtrl.events.bridal.name'>
 				<p> <b> {{homeCtrl.events.bridal.name}} </b> <br/>
 				{{homeCtrl.events.bridal.street}}, {{homeCtrl.events.bridal.city}},{{homeCtrl.events.bridal.state}}, {{homeCtrl.events.bridal.country}}</p>
 			</span>
@@ -48,7 +48,7 @@
 		</div>
 		<div class="extra content">
 			<span ng-show='!ID'>SignIn to find venue and more about this event.</span>
-			<span ng-model="wedding_venue" ng-show='ID'>
+			<span ng-show='homeCtrl.events.wedding.name'>
 				<p> <b> {{homeCtrl.events.wedding.name}} </b> <br/>
 				{{homeCtrl.events.wedding.street}}, {{homeCtrl.events.wedding.city}},{{homeCtrl.events.wedding.state}}, {{homeCtrl.events.wedding.country}}</p>
 			</span>
@@ -67,7 +67,7 @@
 		</div>
 		<div class="extra content">
 			<span ng-show='!ID'>SignIn to find venue and more about this event.</span>
-			<span ng-show='ID'>
+			<span ng-show='homeCtrl.events.reception.name'>
 				<p> <b> {{homeCtrl.events.reception.name}} </b> <br/>
 				{{homeCtrl.events.reception.street}}, {{homeCtrl.events.reception.city}},{{homeCtrl.events.reception.state}}, {{homeCtrl.events.reception.country}}</p>
 			</span>
