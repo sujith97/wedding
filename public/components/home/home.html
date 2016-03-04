@@ -23,10 +23,16 @@
 		<div class="content">
 			<div class="header">Bridal Shower</div>
 			<div class="description">
-				<p>Bride and Groom shower is on <b><em>March 8, 2016</em></b></p>
-				<p>From the bride: We welcome you to come visit our bridal shower ceremony.</p>
-				<p>From the groom: We welcome you to come visit our bridal shower ceremony.</p>
+				<p>Bride and Groom shower is on <b><em>March 9, 2016</em></b></p>
+				<p>{{homeCtrl.events.bridal.content}}</p>
 			</div>
+		</div>
+		<div class="extra content">
+			<span ng-show='!ID'>SignIn to find venue and more about this event.</span>
+			<span ng-model="wedding_venue" ng-show='ID'>
+				<p> <b> {{homeCtrl.events.bridal.name}} </b> <br/>
+				{{homeCtrl.events.bridal.street}}, {{homeCtrl.events.bridal.city}},{{homeCtrl.events.bridal.state}}, {{homeCtrl.events.bridal.country}}</p>
+			</span>
 		</div>
 	</div>
   </div>
@@ -36,10 +42,16 @@
 		<div class="content">
 			<div class="header">Wedding</div>
 			<div class="description">
-				<p>The big day - Wedding is on <b><em>March 10, 2016</em></b></p>
-				<p>From the bride: We welcome you to come visit our bridal shower ceremony.</p>
-				<p>From the groom: We welcome you to come visit our bridal shower ceremony.</p>
+				<p>Wedding is on <b><em>March 10, 2016 - 8:30AM</em></b></p>
+				<p>{{homeCtrl.events.wedding.content}}</p>
 			</div>
+		</div>
+		<div class="extra content">
+			<span ng-show='!ID'>SignIn to find venue and more about this event.</span>
+			<span ng-model="wedding_venue" ng-show='ID'>
+				<p> <b> {{homeCtrl.events.wedding.name}} </b> <br/>
+				{{homeCtrl.events.wedding.street}}, {{homeCtrl.events.wedding.city}},{{homeCtrl.events.wedding.state}}, {{homeCtrl.events.wedding.country}}</p>
+			</span>
 		</div>
 	</div>
   </div>
@@ -49,11 +61,16 @@
 		<div class="content">
 			<div class="header">Reception</div>
 			<div class="description">
-				<p>Reception is on <b><em>March 11, 2016</em></b></p>
-				<p>From the bride: We welcome you to come visit our bridal shower ceremony.</p>
-				<p>From the groom: We welcome you to come visit our bridal shower ceremony.</p>
+				<p>Reception is on <b><em>March 11, 2016 - 7:00PM</em></b></p>
+				<p>{{homeCtrl.events.reception.content}}</p>
 			</div>
-			
+		</div>
+		<div class="extra content">
+			<span ng-show='!ID'>SignIn to find venue and more about this event.</span>
+			<span ng-show='ID'>
+				<p> <b> {{homeCtrl.events.reception.name}} </b> <br/>
+				{{homeCtrl.events.reception.street}}, {{homeCtrl.events.reception.city}},{{homeCtrl.events.reception.state}}, {{homeCtrl.events.reception.country}}</p>
+			</span>
 		</div>
 	</div>
   </div>

@@ -20,6 +20,7 @@ FOLDER.VIEW_FILES_ROOT = 'views';
 FOLDER.PRODUCTION_FOLDER = 'release';
 FOLDER.MAIN_RUNNER = path.join('bin', 'www');
 FOLDER.JS_FOLDER = path.join(FOLDER.STATIC_FILES_ROOT, 'components', '**', PATTERN.JAVASCRIPT);
+FOLDER.HTML_FOLDER = path.join(FOLDER.STATIC_FILES_ROOT, 'components', '**', PATTERN.HTML);
 FOLDER.CSS_PREPROS = path.join(FOLDER.STATIC_FILES_ROOT, 'stylesheets', 'prepros', '**', PATTERN.STYLUS);
 FOLDER.CSS_DESTINATION = path.join(FOLDER.STATIC_FILES_ROOT, 'stylesheets');
 FOLDER.VIEW_FILES = path.join(FOLDER.VIEW_FILES_ROOT, '**', PATTERN.EJS);
@@ -39,9 +40,10 @@ var GULP_TASKS = {
 }
 
 gulp.task(GULP_TASKS.OPTIMIZE, function() {
-  runSequence(GULP_TASKS.CLEAN,
-              [GULP_TASKS.OPTIMIZE_STATICS, GULP_TASKS.HTML_TEMPLATES]
-              );
+  runSequence(
+    GULP_TASKS.CLEAN,
+    [GULP_TASKS.OPTIMIZE_STATICS, GULP_TASKS.HTML_TEMPLATES]
+  );
 });
 
 gulp.task(GULP_TASKS.OPTIMIZE_STATICS, function() {
@@ -93,6 +95,7 @@ gulp.task(GULP_TASKS.SERVE, [GULP_TASKS.STYLES, GULP_TASKS.NODEMON], function ()
     ws: true
   });
 
+  gulp.watch(FOLDER.HTML_FOLDER, reload);
   gulp.watch(FOLDER.VIEW_FILES, reload);
   gulp.watch(FOLDER.CSS_PREPROS, [GULP_TASKS.STYLES, reload]);
   gulp.watch(FOLDER.JS_FOLDER, [GULP_TASKS.JSHINT, reload]);

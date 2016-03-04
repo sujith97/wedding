@@ -12,11 +12,11 @@
       return service;
 
       function handleRequest(config) {
-        var id = store.get('id');
+        var id = store.get('id'),
+          token = store.get('token');;
         if (id) {
-            config.headers['session-id'] = id;
-        } else {
-          config.headers['session-id'] = 'NONE';
+          config.headers['id'] = id;
+          config.headers['token'] = token;
         }
         return config;
       }

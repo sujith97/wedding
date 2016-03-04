@@ -4,50 +4,43 @@
 	.directive('socialNav', socialNav);
 
 	function socialNav() {
-
-		SocialNavCtrl.$inject = ['$scope', '$location', 'facebookService', 'store'];
-		function SocialNavCtrl($scope, $location, facebookService, store) {
-			$scope.hasNotLoggedIn = true;
-			angular.element('.profile').on('mouseover', function() {$scope.$apply(function() {$scope.name = 'SignOut'})});
-			angular.element('.profile').on('mouseleave', function() {$scope.$apply(function() {$scope.name = store.get('name')})});
-
-			$scope.isActive = function(viewLocation) {
-				return viewLocation === $location.path();
-			};
-			var name = store.get('name');
-			if (name) {
-				$scope.hasNotLoggedIn = false;
+		SocialNavCtrl.$inject = ['$scope', 'store', 'socket', '$window', '$cookies'];
+		function SocialNavCtrl($scope, store, socket, $window, $cookies) {
+			if ($scope.ID) {
+				store.set('id', $scope.ID);
+				store.set('token', $scope.TOKEN);
+				socket.emit('name', {id: $scope.ID, token: $scope.TOKEN});
+			}
+			socket.on('person_name', function(name) {
 				$scope.name = name;
-			}
-			$scope.signOut = function() {
-				facebookService.logout().then(function(response) {
-					$scope.hasNotLoggedIn = true;
-					$scope.name = '';
-					store.set('id', undefined);
-					store.set('name', undefined);
-				});
-			}
+			});
+
+			socket.emit('fb_url');
+			socket.on('fb_url_resp', function(fbUrl) {
+				$scope.fbUrl = fbUrl;
+	  	});
+
+			socket.on('logged out', function() {
+				$cookies.remove('ramana');
+				$cookies.remove('gokula');
+				$window.location = '/';
+			})
 
 			$scope.fbLogin = function() {
-				facebookService.getName().then(function(response) {
-					
-					$scope.name = response.name;
-					store.set('id', response.id);
-					store.set('name', response.name);
-					setTimeout(function() { $scope.hasNotLoggedIn = false; }, 1);
-				},
-				function(response) {
-				 console.log(response);
-				}
-				);
-			};
+				$window.location = $scope.fbUrl;
+			}
+
+			$scope.signOut = function() {
+				store.remove('id');
+				store.remove('token');
+				socket.emit('logout', {id: $scope.ID, token: $scope.TOKEN});
+			}
 		}
 
 		return {
 			restrict: 'E',
 			controller: SocialNavCtrl,
 			link: function() {
-				$('.ui.floating.dropdown').dropdown();
 			},
 			templateUrl: 'components/common/socialSignIn.html'
 		};
@@ -58,18 +51,17 @@
 			restrict: 'E', 
 			link: function() {
 			},
+			controller: ['$scope', '$location', function($scope, $location) {
+				$scope.isActive = function(viewLocation) {
+					return viewLocation === $location.path();
+				};
+				if ($scope.USER) {
+					console.log($scope.USER);
+				}
+			}],
 			templateUrl: 'components/common/navbar.html'
 		};
 	};
 
-	window.fbAsyncInit = function() {
-	  FB.init({ 
-	    appId: '143638359331079',
-	    status: true, 
-	    cookie: true, 
-	    xfbml: true,
-	    version: 'v2.4'
-	  });
-	};
 })();
 

@@ -7,12 +7,49 @@
 	function FacebookService($q) {
 		var service = {
 			getName: getName,
+			getPicture: getPicture,
+			isInvited: isInvited,
 			logout: Facebook().logout
 		}
 		return service;
 
 		function getName() {
 			return Facebook().api('/me', {});
+		}
+
+		function getPicture() {
+			return Facebook().api('/me/picture', {});
+		}
+
+		function isInvited(id) {
+			var deferred = $q.defer();
+			var groupId = '/193236234370730';
+			Facebook().api(groupId + '/noreply/' + id, {}).then(function(noreply) {
+				if (noreply.data.length > 0) {
+					deferred.resolve(true); 
+				} else {
+					Facebook().api(groupId + '/maybe/' + id, {}).then(function(maybe) {
+						if (maybe.data.length > 0) {
+							deferred.resolve(true); 
+						} else {
+							Facebook().api(groupId + '/attending/' + id, {}).then(function(attending) {
+								if (attending.data.length > 0) {
+									deferred.resolve(true); 
+								} else {
+									Facebook().api(groupId + '/interested/' + id, {}).then(function(interested) {
+										if (interested.data.length > 0) {
+											deferred.resolve(true); 
+										} else {
+											deferred.resolve(false); 
+										}
+									});
+								}
+							});
+						}
+					});
+				}
+			});
+			return deferred.promise;
 		}
 
 		function Facebook() {
@@ -41,7 +78,7 @@
 							// User cancelled login or did not fully authorize
 							deferred.reject(response);
 						}
-					});
+					}, {scope: 'user_about_me'});
 					return deferred.promise;
 				},
 				logout: function() {

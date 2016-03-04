@@ -2,11 +2,17 @@
 	angular.module('home.controller', [])
 	.controller('homeController', HomeController);
 
-	HomeController.$inject = ['$scope', '$state'];
-	function HomeController($scope, $state) {
+	HomeController.$inject = ['$scope', '$state', 'socket'];
+	function HomeController($scope, $state, socket) {
 		var vm = this;
 		var deadline = '2016-03-10';
 		initializeClock($scope, vm, deadline);
+		socket.emit('event details', {id: $scope.ID, token: $scope.TOKEN});
+
+		socket.on('event details resp', function(events) {
+			console.log(events.wedding)
+			vm.events = events;
+		});
 	};
 
 	function initializeClock($scope, vm, endtime){
