@@ -2,7 +2,7 @@ var express = require('express'),
 	config = require('../config'),
 	router = express.Router()
 	Step = require('step'),
-	FB = require('FB'),
+	FB = require('fb'),
   dbService = require('../services/dbService');
 
 FB.options({

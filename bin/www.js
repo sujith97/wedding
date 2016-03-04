@@ -5,7 +5,7 @@ var app = require('../app'),
   debug = require('debug')('TestMe:server'),
   http = require('http'),
   dbService = require('../services/dbService'),
-  FB = require('FB'),
+  FB = require('fb'),
   facebook= require('../services/facebook')(FB),
   q = require('q');
 
