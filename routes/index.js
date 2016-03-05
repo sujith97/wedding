@@ -16,6 +16,14 @@ router.get('/', function(req, res, next) {
 	res.render('index', prepareRespObj(req.cookies));
 });
 
+router.get('/termsprivacy', function(req, res, next) {
+	res.send('All copyright, trade marks, design rights, patents and other intellectual property rights (registered and unregistered) in and on http://bheemireddi.com belong to myself (Sujith Bheemireddi). ');
+});
+
+router.get('/help', function(req, res, next) {
+	res.send('Please email: "sujithterminal@gmail.com" for any help.');
+});
+
 function prepareRespObj(cookies) {
 	var resp = {
 		MODULE_NAME: config.INDEX_PAGE.MODULE_NAME,
