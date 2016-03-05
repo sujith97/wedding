@@ -19,11 +19,11 @@
 			if (events.reception.name) {
 				count++;
 			}
-			if (count == 0) {
+			if (count === 0) {
 				vm.columnSize = 'ten';
-			} else if (count == 1) {
+			} else if (count === 1) {
 				vm.columnSize = 'eight';
-			} else if (count == 2) {
+			} else if (count === 2) {
 				vm.columnSize = 'five';
 			}
 		});
