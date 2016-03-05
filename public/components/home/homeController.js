@@ -12,20 +12,6 @@
 		socket.on('event details resp', function(events) {
 			console.log(events.wedding)
 			vm.events = events;
-			var count = 0;
-			if (events.bridal.name) {
-				count++;
-			}
-			if (events.reception.name) {
-				count++;
-			}
-			if (count === 0) {
-				vm.columnSize = 'ten';
-			} else if (count === 1) {
-				vm.columnSize = 'eight';
-			} else if (count === 2) {
-				vm.columnSize = 'five';
-			}
 		});
 	};
 

@@ -18,7 +18,7 @@
 
 <div class="ui stackable grid">
   
-  <div ng-class="homeCtrl.columnSize" class="wide column" ng-show='homeCtrl.events.bridal.name'>
+  <div class="five wide column">
   	<div class="ui card">
 		<div class="content">
 			<div class="header">Bridal Shower</div>
@@ -29,15 +29,18 @@
 		</div>
 		<div class="extra content">
 			<span ng-show='!ID'>SignIn to find venue and more about this event.</span>
-			<span>
+			<span ng-show='homeCtrl.events.bridal.name'>
 				<p> <b> {{homeCtrl.events.bridal.name}} </b> <br/>
 				{{homeCtrl.events.bridal.street}}, {{homeCtrl.events.bridal.city}},{{homeCtrl.events.bridal.state}}, {{homeCtrl.events.bridal.country}}</p>
+			</span>
+			<span ng-show='ID && !homeCtrl.events.bridal.name'>
+				<p> <b> Your invitation is being reviewed for this event.</b> <br/>
 			</span>
 		</div>
 	</div>
   </div>
 
-  <div ng-class="homeCtrl.columnSize" class="wide column">
+  <div class="five wide column">
   	<div class="ui card">
 		<div class="content">
 			<div class="header">Wedding</div>
@@ -52,11 +55,14 @@
 				<p> <b> {{homeCtrl.events.wedding.name}} </b> <br/>
 				{{homeCtrl.events.wedding.street}}, {{homeCtrl.events.wedding.city}},{{homeCtrl.events.wedding.state}}, {{homeCtrl.events.wedding.country}}</p>
 			</span>
+			<span ng-show='ID && !homeCtrl.events.wedding.name'>
+				<p> <b> Your invitation is being reviewed for this event.</b> <br/>
+			</span>
 		</div>
 	</div>
   </div>
 
-  <div ng-class="homeCtrl.columnSize" class=" wide column" ng-show='homeCtrl.events.reception.name'>
+  <div class="five wide column">
   	<div class="ui card">
 		<div class="content">
 			<div class="header">Reception</div>
@@ -67,9 +73,12 @@
 		</div>
 		<div class="extra content">
 			<span ng-show='!ID'>SignIn to find venue and more about this event.</span>
-			<span>
+			<span ng-show='homeCtrl.events.reception.name'>
 				<p> <b> {{homeCtrl.events.reception.name}} </b> <br/>
 				{{homeCtrl.events.reception.street}}, {{homeCtrl.events.reception.city}},{{homeCtrl.events.reception.state}}, {{homeCtrl.events.reception.country}}</p>
+			</span>
+			<span ng-show='ID && !homeCtrl.events.reception.name'>
+				<p> <b> Your invitation is being reviewed for this event.</b> <br/>
 			</span>
 		</div>
 	</div>
