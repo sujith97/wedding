@@ -3,7 +3,8 @@ var express = require('express'),
 	config = require('../config'),
 	bootstrap = require('../services/bootstrap'),
 	FB = require('fb'),
-	dbService = require('../services/dbService');
+	dbService = require('../services/dbService'),
+	resourceDbService = require('../services/resourceDbService');
 
 FB.options({
   appId:          process.env['FB_APP_ID'],
@@ -22,6 +23,54 @@ router.get('/termsprivacy', function(req, res, next) {
 
 router.get('/help', function(req, res, next) {
 	res.send('Please email: "sujithterminal@gmail.com" for any help.');
+});
+
+router.post('/liquor', function(req, res, next) {
+	console.log(req.body)
+	resourceDbService.saveLiquor(req.body).then(function(response) {
+		res.end('OK');
+	}, function(err) {
+		res.json({err: err});
+	});
+});
+
+router.get('/liquor/:id', function(req, res, next) {
+	console.log(req.params.id)
+	resourceDbService.findLiquor(req.params.id).then(function(response) {
+		res.json(response);
+	}, function(err) {
+		res.json({err: err});
+	});
+});
+
+router.post('/steward', function(req, res, next) {
+	resourceDbService.saveSteward(req.body).then(function(response) {
+		res.end('OK');
+	});
+});
+
+router.get('/steward/:id', function(req, res, next) {
+	resourceDbService.findSteward(req.params.id.toString()).then(function(response) {
+		res.json(response);
+	}, function(err) {
+		res.json({err: err});
+	});
+});
+
+router.post('/associate', function(req, res, next) {
+	resourceDbService.associate(req.body).then(function(response) {
+		res.json(response);
+	}, function(err) {
+		res.json({err: err});
+	});
+});
+
+router.get('/associations', function(req, res, next) {
+	resourceDbService.findAllAssociations().then(function(response) {
+		res.json(response);
+	}, function(err) {
+		res.json({err: err});
+	});
 });
 
 function prepareRespObj(cookies) {
